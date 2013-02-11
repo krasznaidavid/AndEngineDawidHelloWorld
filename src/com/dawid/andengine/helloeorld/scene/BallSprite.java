@@ -17,20 +17,23 @@ public class BallSprite extends Sprite
 	private int ballNumber;
 	private Color ballColor;
 
-	public BallSprite(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager, int pBallNumber)
+	public BallSprite(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager, 
+			int pBallNumber, float scale)
 	{
 		super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
 		this.ballNumber = pBallNumber;
-		final Text ballText = new Text(0, 0, ResourceManager.getInstance().font, String.valueOf(this.ballNumber), new TextOptions(HorizontalAlign.CENTER), pVertexBufferObjectManager);
+		final Text ballText = new Text(0, 0, ResourceManager.getInstance().getMainFont(), String.valueOf(this.ballNumber), 
+				new TextOptions(HorizontalAlign.CENTER), pVertexBufferObjectManager);
 		final float textX = (getWidth() - ballText.getWidth()) / 2;
 		final float textY = (getHeight() - ballText.getHeight()) / 2;
-		final Rectangle textLine = new Rectangle(textX, textY + ballText.getHeight(), ballText.getWidth(), 2, pVertexBufferObjectManager);
+		final Rectangle textLine = new Rectangle(textX, textY + ballText.getHeight() - 5, ballText.getWidth(), 2, pVertexBufferObjectManager);
 		textLine.setColor(Color.BLACK);
 		ballText.setPosition(textX, textY);
 		attachChild(ballText);
 		attachChild(textLine);
 		ballColor = ColorHelper.GetRandomColor();
 		setColor(ballColor);
+		setScale(scale);
 	}
 
 	public int getBallNumber()

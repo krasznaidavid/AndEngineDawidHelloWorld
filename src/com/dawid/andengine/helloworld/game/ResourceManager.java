@@ -4,6 +4,7 @@ import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.font.StrokeFont;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
@@ -17,6 +18,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.debug.Debug;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 
 public class ResourceManager
 {
@@ -27,7 +29,9 @@ public class ResourceManager
 	public Camera camera;
 	public VertexBufferObjectManager vbom;
 	
-	public Font font;
+	private Font plainFont;
+	//private Font mainFont;
+	private StrokeFont mainFont;
 	
 	//Splash scene
 	public ITextureRegion splashRegion;
@@ -56,12 +60,14 @@ public class ResourceManager
 		getInstance().activity = activity;
 		getInstance().camera = camera;
 		getInstance().vbom = vbom;
+		getInstance().loadMainFont();
 	}
 	
 	public void loadMenuResources()
 	{
 		loadMenuGraphics();
 		loadMenuAudio();
+		loadMainFont();
 		loadMenuFonts();
 	}
 
@@ -91,9 +97,20 @@ public class ResourceManager
 
 	}
 
+	private void loadMainFont()
+	{
+		final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR);
+		FontFactory.setAssetBasePath("font/");
+		//mainFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), 
+				//"Plok.ttf", 24, true, Color.BLACK);
+		mainFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), 
+				"DroidSans-Bold.ttf", 52, true, Color.WHITE, 2, Color.BLACK);
+		mainFont.load();
+	}
+	
 	private void loadGameFonts()
 	{
-
+		
 	}
 
 	private void loadGameGraphics()
@@ -161,13 +178,18 @@ public class ResourceManager
 	    FontFactory.setAssetBasePath("font/");
 	    final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, 
 	    		TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-	    font = FontFactory.create(activity.getFontManager(), mainFontTexture, 30, true, Color.BLACK);
-	    font.load();
+	    plainFont = FontFactory.create(activity.getFontManager(), mainFontTexture, 30, true, Color.BLACK);
+	    plainFont.load();
 	}
 	
 	public static ResourceManager getInstance()
 	{
 		return INSTANCE;
+	}
+	
+	public Font getMainFont()
+	{
+		return mainFont;
 	}
 	
 }
