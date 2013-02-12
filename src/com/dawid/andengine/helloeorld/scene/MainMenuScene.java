@@ -1,14 +1,17 @@
 package com.dawid.andengine.helloeorld.scene;
 
 import org.andengine.engine.camera.Camera;
+import org.andengine.entity.scene.background.RepeatingSpriteBackground;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasSource;
 import org.andengine.opengl.util.GLState;
 
+import com.dawid.andengine.helloworld.game.GameActivity;
 import com.dawid.andengine.helloworld.game.SceneManager;
 import com.dawid.andengine.helloworld.game.SceneManager.SceneType;
 
@@ -46,15 +49,9 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 
 	private void createBackground()
 	{
-	    attachChild(new Sprite(0, 0, resourceManager.menuBackgroundRegion, vbom)
-	    {
-	        @Override
-	        protected void preDraw(GLState pGLState, Camera pCamera)
-	        {
-	        	super.preDraw(pGLState, pCamera);
-	        	pGLState.enableDither();
-	        }
-	    });
+		final RepeatingSpriteBackground background = new RepeatingSpriteBackground(GameActivity.CAMERA_WIDTH, GameActivity.CAMERA_HEIGHT, activity.getTextureManager(),
+				AssetBitmapTextureAtlasSource.create(activity.getAssets(), "gfx/game/background.png"), vbom);
+		setBackground(background);
 	}
 	
 	private void createMenuChildScene()
@@ -63,16 +60,16 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	    menuChildScene.setPosition(0, 0);
 	    
 	    final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourceManager.playRegion, vbom), 1.2f, 1);
-	    final IMenuItem optionsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_OPTIONS, resourceManager.optionsRegion, vbom), 1.2f, 1);
+	    //final IMenuItem optionsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_OPTIONS, resourceManager.optionsRegion, vbom), 1.2f, 1);
 	    
 	    menuChildScene.addMenuItem(playMenuItem);
-	    menuChildScene.addMenuItem(optionsMenuItem);
+	    //menuChildScene.addMenuItem(optionsMenuItem);
 	    
 	    menuChildScene.buildAnimations();
 	    menuChildScene.setBackgroundEnabled(false);
 	    
-	    playMenuItem.setPosition(playMenuItem.getX(), playMenuItem.getY() + 40);
-	    optionsMenuItem.setPosition(optionsMenuItem.getX(), optionsMenuItem.getY() + 60);
+	    playMenuItem.setPosition(playMenuItem.getX(), playMenuItem.getY());
+	    //optionsMenuItem.setPosition(optionsMenuItem.getX(), optionsMenuItem.getY());
 	    
 	    menuChildScene.setOnMenuItemClickListener(this);
 	    
@@ -88,7 +85,8 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
         	case MENU_PLAY: 
         		SceneManager.getInstance().loadGameScene(engine);
         		return true;
-        	case MENU_OPTIONS: return true;
+        	case MENU_OPTIONS: 
+        		return true;
         	default: return false;
         }
 	}

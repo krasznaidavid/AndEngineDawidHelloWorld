@@ -8,13 +8,18 @@ public class ColorHelper
 {
 	private static final Random RANDOM = new Random();
 	
-	private static final Color[] COLORS = new Color[] {
-		Color.CYAN, Color.YELLOW, Color.PINK, Color.WHITE, Color.GREEN
+	private static final Color[] COLORS = new Color[] 
+	{
+		Color.CYAN, 
+		Color.YELLOW, 
+		Color.PINK, 
+		Color.WHITE, 
+		Color.GREEN
 	};
 	
 	public static Color GetRandomColor()
 	{
-		final int colorIndex = RANDOM.nextInt(COLORS.length - 1);
+		final int colorIndex = RANDOM.nextInt(COLORS.length);
 		final Color color = COLORS[colorIndex];
 		return color;
 	}

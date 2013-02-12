@@ -18,7 +18,6 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.debug.Debug;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 
 public class ResourceManager
 {
@@ -81,7 +80,7 @@ public class ResourceManager
 	public void loadSplashScreen()
 	{
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-		spalshTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR);
+		spalshTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 512, 512, TextureOptions.BILINEAR);
 		splashRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(spalshTextureAtlas, activity, "splash.png", 0, 0);
 		spalshTextureAtlas.load();
 	}
@@ -104,7 +103,7 @@ public class ResourceManager
 		//mainFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), 
 				//"Plok.ttf", 24, true, Color.BLACK);
 		mainFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), 
-				"DroidSans-Bold.ttf", 52, true, Color.WHITE, 2, Color.BLACK);
+				"DroidSans-Bold.ttf", 48, true, Color.WHITE, 2, Color.BLACK);
 		mainFont.load();
 	}
 	
