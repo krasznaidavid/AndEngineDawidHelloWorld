@@ -38,6 +38,7 @@ public class LevelText extends Text
 					public void run()
 					{
 						pItem.detachSelf();
+						pItem.dispose();
 					}
 				});
 			}

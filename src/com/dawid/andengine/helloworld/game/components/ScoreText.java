@@ -36,6 +36,7 @@ public class ScoreText extends Text
 					public void run()
 					{
 						pItem.detachSelf();
+						pItem.dispose();
 					}
 				});
 			}
