@@ -5,11 +5,11 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.ui.IGameInterface.OnCreateSceneCallback;
 
-import com.dawid.andengine.helloeorld.scene.BaseScene;
-import com.dawid.andengine.helloeorld.scene.GameScene;
-import com.dawid.andengine.helloeorld.scene.LoadingScene;
-import com.dawid.andengine.helloeorld.scene.MainMenuScene;
-import com.dawid.andengine.helloeorld.scene.SplashScene;
+import com.dawid.andengine.helloworld.scene.BaseScene;
+import com.dawid.andengine.helloworld.scene.GameScene;
+import com.dawid.andengine.helloworld.scene.LoadingScene;
+import com.dawid.andengine.helloworld.scene.MainMenuScene;
+import com.dawid.andengine.helloworld.scene.SplashScene;
 
 public class SceneManager
 {

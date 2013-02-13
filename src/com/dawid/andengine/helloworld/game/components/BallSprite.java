@@ -1,4 +1,4 @@
-package com.dawid.andengine.helloeorld.scene;
+package com.dawid.andengine.helloworld.game.components;
 
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;

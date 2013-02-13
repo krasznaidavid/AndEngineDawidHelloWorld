@@ -1,17 +1,12 @@
-package com.dawid.andengine.helloeorld.scene;
+package com.dawid.andengine.helloworld.scene;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.microedition.khronos.opengles.GL10;
-
+import org.andengine.entity.text.Text;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
-import org.andengine.entity.IEntity;
-import org.andengine.entity.modifier.AlphaModifier;
-import org.andengine.entity.modifier.FadeOutModifier;
-import org.andengine.entity.modifier.IEntityModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnAreaTouchListener;
 import org.andengine.entity.scene.IOnSceneTouchListener;
@@ -20,7 +15,6 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.background.RepeatingSpriteBackground;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
@@ -30,7 +24,6 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasSource;
 import org.andengine.util.HorizontalAlign;
 import org.andengine.util.color.Color;
-import org.andengine.util.modifier.IModifier;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -40,6 +33,9 @@ import com.dawid.andengine.helloworld.game.GameActivity;
 import com.dawid.andengine.helloworld.game.ResourceManager;
 import com.dawid.andengine.helloworld.game.SceneManager;
 import com.dawid.andengine.helloworld.game.SceneManager.SceneType;
+import com.dawid.andengine.helloworld.game.components.BallSprite;
+import com.dawid.andengine.helloworld.game.components.LevelText;
+import com.dawid.andengine.helloworld.game.components.ScoreText;
 
 public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAreaTouchListener
 {	
@@ -73,7 +69,8 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
 				{
 					number = -number;
 				}
-			} else
+			} 
+			else
 			{
 				number = (int) Math.round(Math.random() * bound);
 			}
@@ -148,22 +145,22 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
 			case 12: 
 				ballNumbers = getRandomNumbers(17, 50, true); 
 				isFixedRotation = false;
-				scale = .8f;
+				scale = 1f;
 				break;
 			case 13: 
 				ballNumbers = getRandomNumbers(18, 70, true); 
 				isFixedRotation = false;
-				scale = .8f;
+				scale = 1f;
 				break;
 			case 14: 
 				ballNumbers = getRandomNumbers(19, 70, true); 
 				isFixedRotation = false;
-				scale = .7f;
+				scale = 1f;
 				break;
 			case 15: 
 				ballNumbers = getRandomNumbers(20, 99, true); 
 				isFixedRotation = false;
-				scale = .7f;
+				scale = 1f;
 				break;
 			default : 
 				ballNumbers = getRandomNumbers(20, 99, true); 
@@ -180,18 +177,13 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
 	
 	private void addLevelSprite(final int levelNumber)
 	{
-		final Text levelText = new Text(0, 0, ResourceManager.getInstance().getMainFont(), "Level " + String.valueOf(levelNumber), new TextOptions(HorizontalAlign.CENTER), vbom);
-		final float textX = (GameActivity.CAMERA_WIDTH - levelText.getWidth()) / 2;
-		final float textY = (GameActivity.CAMERA_HEIGHT - levelText.getHeight()) / 2;
-		levelText.setPosition(textX, textY);
-		levelText.setScale(2f);
-		attachChild(levelText);
-		levelText.registerEntityModifier(new FadeOutModifier(2f));
+		new LevelText(0, 0, ResourceManager.getInstance().getMainFont(), "Level " + String.valueOf(levelNumber), 
+				new TextOptions(HorizontalAlign.CENTER), vbom, activity, this);
 	}
 
 	private void addBall(final int ballNumber, final boolean isFixed, final float scale)
 	{
-		final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(1, 0.99f, 0.1f);
+		final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(1, 1f, 0.1f);
 		final BallSprite ballSprite = new BallSprite(0, 0, resourceManager.ball_region, vbom, ballNumber, scale);
 		final float ballX = (float) ((GameActivity.CAMERA_WIDTH - ballSprite.getWidth()) * Math.random());
 		final float ballY = (float) ((GameActivity.CAMERA_HEIGHT - ballSprite.getHeight()) * Math.random());
@@ -216,7 +208,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
 		left.setColor(Color.BLACK);
 		right.setColor(Color.BLACK);
 
-		final FixtureDef wallFixtureDef = PhysicsFactory.createFixtureDef(0, 0.99f, 0.1f);
+		final FixtureDef wallFixtureDef = PhysicsFactory.createFixtureDef(0f, 1f, 0.1f);
 		PhysicsFactory.createBoxBody(this.physicsWorld, ground, BodyType.StaticBody, wallFixtureDef);
 		PhysicsFactory.createBoxBody(this.physicsWorld, roof, BodyType.StaticBody, wallFixtureDef);
 		PhysicsFactory.createBoxBody(this.physicsWorld, left, BodyType.StaticBody, wallFixtureDef);
@@ -240,6 +232,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
 	{
 		final float hudY = 5;
 		gameHUD = new HUD();
+		gameHUD.setBackground(new Background(Color.BLACK));
 		scoreText = new Text(20, hudY, ResourceManager.getInstance().getMainFont(), "Score: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 		scoreText.setText("Score: 0");
 		timeText = new Text(0, 0, ResourceManager.getInstance().getMainFont(), "Time: 0123456789", new TextOptions(HorizontalAlign.RIGHT), vbom);
@@ -295,20 +288,32 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
 	public void disposeScene()
 	{
 		camera.setHUD(null);
-		camera.setCenter(400, 240);
+		camera.setCenter(GameActivity.CAMERA_WIDTH / 2, GameActivity.CAMERA_HEIGHT / 2);
 	}
 
+	private void addScoreAndText(final float x, final float y, final int score)
+	{
+		addToScore(score);
+		String text = "";
+		if (score > 0)
+			text = "+";
+		text += String.valueOf(score);
+		new ScoreText(x, y, ResourceManager.getInstance().getMainFont(), text, vbom, activity, this);
+	}
+	
 	@Override
 	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, ITouchArea pTouchArea, float pTouchAreaLocalX, float pTouchAreaLocalY)
 	{
 		if (pSceneTouchEvent.isActionDown())
 		{
+			final float x = pSceneTouchEvent.getX();
+			final float y = pSceneTouchEvent.getY();
 			final BallSprite sprite = (BallSprite) pTouchArea;
 			if (sprite.getBallNumber() == getMin())
 			{
 				ballNumbers.remove(0);
 				removeSprite(sprite);
-				addToScore(10);
+				addScoreAndText(x, y, 10);
 				checkWin();
 				return true;
 			} 
@@ -324,7 +329,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener, IOnAr
 						sprite.setColor(sprite.getBallColor());
 					}
 				}));
-				addToScore(-10);
+				addScoreAndText(x, y, -10);
 			}
 		}
 		return false;

@@ -1,9 +1,10 @@
-package com.dawid.andengine.helloeorld.scene;
+package com.dawid.andengine.helloworld.scene;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
 
+import com.dawid.andengine.helloworld.game.GameActivity;
 import com.dawid.andengine.helloworld.game.SceneManager.SceneType;
 
 public class SplashScene extends BaseScene
@@ -23,8 +24,8 @@ public class SplashScene extends BaseScene
 			}
 		};
 		
-		splash.setScale(1.5f);
-		splash.setPosition(400 - (splash.getWidth() / 2), 240 - (splash.getHeight() / 2));
+		splash.setPosition((GameActivity.CAMERA_WIDTH - splash.getWidth()) / 2, 
+						   (GameActivity.CAMERA_HEIGHT - splash.getHeight()) / 2);
 		attachChild(splash);
 	}
 

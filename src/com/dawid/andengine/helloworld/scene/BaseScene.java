@@ -1,4 +1,4 @@
-package com.dawid.andengine.helloeorld.scene;
+package com.dawid.andengine.helloworld.scene;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;

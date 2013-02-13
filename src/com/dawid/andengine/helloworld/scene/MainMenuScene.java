@@ -1,15 +1,12 @@
-package com.dawid.andengine.helloeorld.scene;
+package com.dawid.andengine.helloworld.scene;
 
-import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.background.RepeatingSpriteBackground;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasSource;
-import org.andengine.opengl.util.GLState;
 
 import com.dawid.andengine.helloworld.game.GameActivity;
 import com.dawid.andengine.helloworld.game.SceneManager;
