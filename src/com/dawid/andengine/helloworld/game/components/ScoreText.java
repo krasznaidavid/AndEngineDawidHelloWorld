@@ -12,37 +12,43 @@ import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.util.modifier.IModifier;
 
 
-public class ScoreText extends Text
+public class ScoreText extends Text implements IEntityModifierListener
 {
-	private float _duration = 1f;
-	private float _distance = 50f;
+	private final float mDuration = 1f;
+	private final float mDistance = -50f;
+	private final BaseGameActivity mActivity;
 	
 	public ScoreText(float pX, float pY, IFont pFont, CharSequence pText,
-			VertexBufferObjectManager pVertexBufferObjectManager, final BaseGameActivity activity, IEntity parent)
+			VertexBufferObjectManager pVertexBufferObjectManager, BaseGameActivity pActivity, IEntity pParent)
 	{
 		super(pX, pY, pFont, pText, pVertexBufferObjectManager);
-		final ParallelEntityModifier parallelEntityModifier = new ParallelEntityModifier(new IEntityModifierListener()
-		{
-			@Override
-			public void onModifierStarted(final IModifier<IEntity> pModifier, final IEntity pItem)
-			{}
-			
-			@Override
-			public void onModifierFinished(final IModifier<IEntity> pModifier, final IEntity pItem)
-			{
-				activity.runOnUpdateThread(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						pItem.detachSelf();
-						pItem.dispose();
-					}
-				});
-			}
-		}, new FadeOutModifier(_duration), new MoveYModifier(_duration, pY, pY - _distance));
+		this.mActivity = pActivity;
+		initializeModifiers();
+		pParent.attachChild(this);
+	}
+
+	private void initializeModifiers()
+	{
+		final ParallelEntityModifier parallelEntityModifier = new ParallelEntityModifier(this, 
+				new FadeOutModifier(mDuration), new MoveYModifier(mDuration, getY(), getY() + mDistance));
 		parallelEntityModifier.setAutoUnregisterWhenFinished(true);
 		registerEntityModifier(parallelEntityModifier);
-		parent.attachChild(this);
+	}
+	
+	@Override
+	public void onModifierStarted(final IModifier<IEntity> pModifier, final IEntity pItem) {}
+
+	@Override
+	public void onModifierFinished(final IModifier<IEntity> pModifier, final IEntity pItem)
+	{
+		mActivity.runOnUpdateThread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				pItem.detachSelf();
+				pItem.dispose();
+			}
+		});
 	}
 }
