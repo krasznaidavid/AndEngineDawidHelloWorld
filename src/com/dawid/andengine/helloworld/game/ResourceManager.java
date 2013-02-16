@@ -29,7 +29,6 @@ public class ResourceManager
 	public VertexBufferObjectManager vbom;
 	
 	private Font plainFont;
-	//private Font mainFont;
 	private StrokeFont mainFont;
 	
 	//Splash scene
@@ -100,8 +99,6 @@ public class ResourceManager
 	{
 		final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR);
 		FontFactory.setAssetBasePath("font/");
-		//mainFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), 
-				//"Plok.ttf", 24, true, Color.BLACK);
 		mainFont = FontFactory.createStrokeFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), 
 				"DroidSans-Bold.ttf", 48, true, Color.WHITE, 2, Color.BLACK);
 		mainFont.load();
@@ -186,9 +183,8 @@ public class ResourceManager
 		return INSTANCE;
 	}
 	
-	public Font getMainFont()
+	public StrokeFont getMainFont()
 	{
 		return mainFont;
 	}
-	
 }
