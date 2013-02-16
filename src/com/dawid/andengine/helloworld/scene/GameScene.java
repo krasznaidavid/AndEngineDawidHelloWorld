@@ -23,12 +23,12 @@ import org.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasS
 import org.andengine.util.HorizontalAlign;
 import org.andengine.util.color.Color;
 
-import android.graphics.Point;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.dawid.andengine.helloworld.game.BallGameLevelManager;
+import com.dawid.andengine.helloworld.game.BallGameLevelOptions;
 import com.dawid.andengine.helloworld.game.GameActivity;
 import com.dawid.andengine.helloworld.game.ResourceManager;
 import com.dawid.andengine.helloworld.game.SceneManager;
@@ -36,7 +36,6 @@ import com.dawid.andengine.helloworld.game.SceneManager.SceneType;
 import com.dawid.andengine.helloworld.game.components.BallSprite;
 import com.dawid.andengine.helloworld.game.components.LevelText;
 import com.dawid.andengine.helloworld.game.components.ScoreText;
-import com.dawid.andengine.helloworld.util.NumberHelper;
 
 public class GameScene extends BaseScene implements IOnSceneTouchListener,
 		IOnAreaTouchListener
@@ -67,132 +66,26 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener,
 
 	private void createLevel(final int levelNumber)
 	{
-		final boolean isFixedRotation;
-		ArrayList<Integer> ballNumbers = new ArrayList<Integer>();
-	    ArrayList<Point> ballNumbersTort = new ArrayList<Point>();
-		final float scale;
-		final int maxSeconds;
-		switch (levelNumber)
-		{
-			case 1:
-				//ballNumbers = NumberHelper.getRandomNumbers(3, 10, false);
-				ballNumbersTort = NumberHelper.getTortSzamok(3, 10, false);
-				isFixedRotation = true;
-				scale = 2f;
-				maxSeconds = 20;
-			break;
-			case 2:
-				//ballNumbers = NumberHelper.getRandomNumbers(6, 12, false);
-				ballNumbersTort = NumberHelper.getTortSzamok(5, 10, false);
-				isFixedRotation = true;
-				scale = 2f;
-				maxSeconds = 25;
-			break;
-			case 3:
-				//ballNumbers = NumberHelper.getRandomNumbers(7, 15, false);
-				ballNumbersTort = NumberHelper.getTortSzamok(6, 10, true);
-				isFixedRotation = true;
-				scale = 1.8f;
-				maxSeconds = 25;
-			break;
-			case 4:
-				//ballNumbers = NumberHelper.getRandomNumbers(8, 20, false);
-				ballNumbersTort = NumberHelper.getTortSzamok(6, 15, true);
-				isFixedRotation = true;
-				scale = 1.8f;
-				maxSeconds = 30;
-			break;
-			case 5:
-				ballNumbers = NumberHelper.getRandomNumbers(10, 20, false);
-				isFixedRotation = false;
-				scale = 1.5f;
-				maxSeconds = 30;
-			break;
-			case 6:
-				ballNumbers = NumberHelper.getRandomNumbers(11, 20, false);
-				isFixedRotation = false;
-				scale = 1.5f;
-				maxSeconds = 30;
-			break;
-			case 7:
-				ballNumbers = NumberHelper.getRandomNumbers(12, 30, false);
-				isFixedRotation = false;
-				scale = 1.2f;
-				maxSeconds = 35;
-			break;
-			case 8:
-				ballNumbers = NumberHelper.getRandomNumbers(13, 30, true);
-				isFixedRotation = false;
-				scale = 1.2f;
-				maxSeconds = 35;
-			break;
-			case 9:
-				ballNumbers = NumberHelper.getRandomNumbers(14, 40, true);
-				isFixedRotation = false;
-				scale = 1.2f;
-				maxSeconds = 35;
-			break;
-			case 10:
-				ballNumbers = NumberHelper.getRandomNumbers(15, 40, true);
-				isFixedRotation = false;
-				scale = 1f;
-				maxSeconds = 20;
-			break;
-			case 11:
-				ballNumbers = NumberHelper.getRandomNumbers(16, 50, true);
-				isFixedRotation = false;
-				scale = 1f;
-				maxSeconds = 20;
-			break;
-			case 12:
-				ballNumbers = NumberHelper.getRandomNumbers(17, 50, true);
-				isFixedRotation = false;
-				scale = 1f;
-				maxSeconds = 20;
-			break;
-			case 13:
-				ballNumbers = NumberHelper.getRandomNumbers(18, 70, true);
-				isFixedRotation = false;
-				scale = 1f;
-				maxSeconds = 20;
-			break;
-			case 14:
-				ballNumbers = NumberHelper.getRandomNumbers(19, 70, true);
-				isFixedRotation = false;
-				scale = 1f;
-				maxSeconds = 20;
-			break;
-			case 15:
-				ballNumbers = NumberHelper.getRandomNumbers(20, 99, true);
-				isFixedRotation = false;
-				scale = 1f;
-				maxSeconds = 20;
-			break;
-			default:
-				ballNumbers = NumberHelper.getRandomNumbers(20, 99, true);
-				isFixedRotation = false;
-				scale = 1f;
-				maxSeconds = 20;
-			break;
-		}
+		BallGameLevelOptions levelOptions = BallGameLevelManager.GetLevel(levelNumber);
 		if (ballSprites.size() > 0)
 		{
 			clearBalls();
 		}
-		this.maxSeconds = maxSeconds;
+		this.maxSeconds = levelOptions.getGameSeconds();
 		timeText.setText("Time: " + maxSeconds);
-		if (ballNumbers.size() > 0)
+		if (levelOptions.getmNumbers() != null)
 		{
-			for (int i = 0; i < ballNumbers.size(); i++)
+			for (int i = 0; i < levelOptions.getmNumbers().size(); i++)
 			{
-				addBall(ballNumbers.get(i), isFixedRotation, scale);
+				addBall(levelOptions.getmNumbers().get(i), levelOptions.isFixedRotation(), levelOptions.getScale());
 			}
 		}
-		else
+		if (levelOptions.getmNumbersTort() != null)
 		{
-			for (int i = 0; i < ballNumbersTort.size(); i++)
+			for (int i = 0; i < levelOptions.getmNumbersTort().size(); i++)
 			{
-				addBallTort(ballNumbersTort.get(i).x, ballNumbersTort.get(i).y, isFixedRotation, scale);
+				addBallTort(levelOptions.getmNumbersTort().get(i).x, levelOptions.getmNumbersTort().get(i).y,
+						levelOptions.isFixedRotation(), levelOptions.getScale());
 			}
 		}
 		addLevelSprite(levelNumber);

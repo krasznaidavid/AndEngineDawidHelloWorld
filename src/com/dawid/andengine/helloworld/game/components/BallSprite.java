@@ -35,6 +35,7 @@ public class BallSprite extends Sprite
 		mBallNumber1 = pBallNumber1;
 		mGameScene = pGameScene;
 		mBallType = BallType.Egesz;
+		mBallColor = ColorHelper.GetRandomColor();
 		initBallEgesz(pVertexBufferObjectManager, pScale);
 	}
 	
