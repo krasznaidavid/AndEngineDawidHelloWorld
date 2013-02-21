@@ -40,11 +40,11 @@ public class BallSprite extends Sprite
 	}
 	
 	public BallSprite(float pX, float pY, ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, 
-			final int pBallNumber1, final int pBallNumber2, final float pScale, final GameScene pGameScene)
+			final int nevezo, final int szamlalo, final float pScale, final GameScene pGameScene)
 	{
 		super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
-		mBallNumber1 = pBallNumber1;
-		mBallNumber2 = pBallNumber2;
+		mBallNumber1 = nevezo;
+		mBallNumber2 = szamlalo;
 		mGameScene = pGameScene;
 		mBallType = BallType.Tort;
 		mBallColor = ColorHelper.GetRandomColor();		

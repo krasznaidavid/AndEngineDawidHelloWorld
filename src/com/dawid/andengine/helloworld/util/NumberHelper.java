@@ -2,7 +2,7 @@ package com.dawid.andengine.helloworld.util;
 
 import java.util.ArrayList;
 
-import android.graphics.Point;
+import com.dawid.andengine.helloworld.game.components.TortSzam;
 
 public class NumberHelper
 {
@@ -31,10 +31,10 @@ public class NumberHelper
 		return numbers;
 	}
 	
-	public static ArrayList<Point> getTortSzamok(final int count, final int bound, 
+	public static ArrayList<TortSzam> getTortSzamok(final int count, final int bound, 
 			final boolean canBeNegative)
 	{
-		ArrayList<Point> numbers = new ArrayList<Point>();
+		ArrayList<TortSzam> numbers = new ArrayList<TortSzam>();
 		while (numbers.size() < count)
 		{
 			int number1;
@@ -53,25 +53,21 @@ public class NumberHelper
 			}
 			if (number1 == 0) number1 = 1;
 			if (number2 == 0) number2 = 1;
-			Point number = new Point(number1, number2);
-			if (!numbers.contains(number) && !containsValue(numbers, number))
+			TortSzam number = new TortSzam(number1, number2);
+			if (!numbers.contains(number) && !containsValue(numbers, number.getSzam()))
 				numbers.add(number);
 		}
 		return numbers;
 	}
 	
-	private static boolean containsValue(ArrayList<Point> pNumbers, Point pPoint)
+	private static boolean containsValue(ArrayList<TortSzam> pNumbers, float pSzam)
 	{
-		for(Point p : pNumbers)
+		for(TortSzam szam : pNumbers)
 		{
-			if (getValue(pPoint) == getValue(p))
+			if (szam.getSzam() == pSzam)
 				return true;
 		}
 		return false;
 	}
-	
-	private static float getValue(Point pPoint)
-	{
-		return pPoint.x / pPoint.y;
-	}
+
 }

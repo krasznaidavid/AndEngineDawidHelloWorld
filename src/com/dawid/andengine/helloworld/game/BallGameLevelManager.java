@@ -4,13 +4,90 @@ import com.dawid.andengine.helloworld.game.BallGameLevelOptions.BallGameType;
 
 public class BallGameLevelManager
 {
-	public static BallGameLevelOptions GetLevel2(final int pLevelNumber)
+	public static BallGameLevelOptions GetLevel(final int pLevelNumber)
 	{
-		BallGameLevelOptions ballGameLevelOptions = new BallGameLevelOptions(BallGameType.Egesz, 3, 10, 2f, true, false, 30);
-		return ballGameLevelOptions;
+		int ballCount = 3;
+		int bound = 10;
+		float scale = 1f;
+		boolean isFixedRotation = true;
+		boolean canBeNegative = false;
+		int maxSecodns = 30;
+		BallGameType ballGameType = BallGameType.Egesz;
+		
+		if (pLevelNumber <= 5)
+		{
+			ballCount = 3;
+			bound = 10;
+			scale = 1f;
+			isFixedRotation = true;
+			canBeNegative = false;
+			maxSecodns = 30;
+			ballGameType = BallGameType.Egesz;
+		}
+		else if (pLevelNumber > 5 && pLevelNumber <= 10)
+		{
+			ballCount = 5;
+			bound = 30;
+			scale = 0.9f;
+			isFixedRotation = false;
+			canBeNegative = false;
+			maxSecodns = 30;
+			ballGameType = BallGameType.Egesz;
+		}
+		else if (pLevelNumber > 10 && pLevelNumber <= 15)
+		{
+			ballCount = pLevelNumber - 5;
+			bound = 50;
+			scale = 0.85f;
+			isFixedRotation = false;
+			canBeNegative = true;
+			maxSecodns = 30;
+			ballGameType = BallGameType.Egesz;
+		}
+		else if (pLevelNumber > 15 && pLevelNumber <= 20)
+		{
+			ballCount = 12;
+			bound = 50;
+			scale = 0.7f;
+			isFixedRotation = true;
+			canBeNegative = false;
+			maxSecodns = 30;
+			ballGameType = BallGameType.Vegyes;
+		}
+		else if (pLevelNumber > 20 && pLevelNumber <= 25)
+		{
+			ballCount = 13;
+			bound = 50;
+			scale = 0.6f;
+			isFixedRotation = true;
+			canBeNegative = true;
+			maxSecodns = 30;
+			ballGameType = BallGameType.Vegyes;
+		}
+		else if (pLevelNumber > 25 && pLevelNumber <= 30)
+		{
+			ballCount = 15;
+			bound = 80;
+			scale = 0.6f;
+			isFixedRotation = false;
+			canBeNegative = true;
+			maxSecodns = 30;
+			ballGameType = BallGameType.Tort;
+		}
+		else if (pLevelNumber > 30)
+		{
+			ballCount = 20;
+			bound = 99;
+			scale = 0.5f;
+			isFixedRotation = false;
+			canBeNegative = true;
+			maxSecodns = 30;
+			ballGameType = BallGameType.Tort;
+		} 
+		return new BallGameLevelOptions(ballGameType, ballCount, bound, scale, isFixedRotation, canBeNegative, true, maxSecodns);
 	}
 	
-	public static BallGameLevelOptions GetLevel(final int pLevelNumber)
+	/*public static BallGameLevelOptions _GetLevel(final int pLevelNumber)
 	{
 		BallGameLevelOptions ballGameLevelOptions;
 		switch (pLevelNumber)
@@ -58,5 +135,5 @@ public class BallGameLevelManager
 			default : ballGameLevelOptions = new BallGameLevelOptions(BallGameType.Egesz, 3, 10, 2f, true, false, 20); break;
 		}
 		return ballGameLevelOptions;
-	}
+	}*/
 }

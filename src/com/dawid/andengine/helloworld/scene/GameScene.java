@@ -36,6 +36,7 @@ import com.dawid.andengine.helloworld.game.SceneManager.SceneType;
 import com.dawid.andengine.helloworld.game.components.BallSprite;
 import com.dawid.andengine.helloworld.game.components.LevelText;
 import com.dawid.andengine.helloworld.game.components.ScoreText;
+import com.dawid.andengine.helloworld.game.components.TortSzam;
 
 public class GameScene extends BaseScene implements IOnSceneTouchListener,
 		IOnAreaTouchListener
@@ -73,24 +74,26 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener,
 		}
 		this.maxSeconds = levelOptions.getGameSeconds();
 		timeText.setText("Time: " + maxSeconds);
-		if (levelOptions.getmNumbers() != null)
+		int x = 0;
+		Object next;
+		while((next = levelOptions.getNext()) != null)
 		{
-			for (int i = 0; i < levelOptions.getmNumbers().size(); i++)
+			float scale = levelOptions.getMinScale() + (levelOptions.getScaleUnit() * x);
+			x++;
+			if (next.getClass() == TortSzam.class)
 			{
-				addBall(levelOptions.getmNumbers().get(i), levelOptions.isFixedRotation(), levelOptions.getScale());
+				TortSzam szam = (TortSzam) next;
+				addBallTort(szam.getNevezo(), szam.getSzamlalo(), levelOptions.isFixedRotation(), scale);
 			}
-		}
-		if (levelOptions.getmNumbersTort() != null)
-		{
-			for (int i = 0; i < levelOptions.getmNumbersTort().size(); i++)
+			else
 			{
-				addBallTort(levelOptions.getmNumbersTort().get(i).x, levelOptions.getmNumbersTort().get(i).y,
-						levelOptions.isFixedRotation(), levelOptions.getScale());
+				int szam = (Integer) next;
+				addBall(szam, levelOptions.isFixedRotation(), scale);
 			}
 		}
 		addLevelSprite(levelNumber);
 	}
-
+	
 	private void clearBalls()
 	{
 		for(int i = ballSprites.size() - 1; i >= 0 ; i--)
@@ -134,13 +137,13 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener,
 		ballSprites.add(ballSprite);
 	}
 	
-	private void addBallTort(final int ballNumber1, final int ballNumber2, 
+	private void addBallTort(final int nevezo, final int szamlalo, 
 			final boolean isFixed, final float scale)
 	{
 		final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(1,
 				1f, 0.1f);
 		final BallSprite ballSprite = new BallSprite(0, 0,
-				resourceManager.ball_region, vbom, ballNumber1, ballNumber2, scale, this);
+				resourceManager.ball_region, vbom, nevezo, szamlalo, scale, this);
 		final float ballX = (float) ((GameActivity.CAMERA_WIDTH - ballSprite
 				.getWidth()) * Math.random());
 		final float ballY = (float) ((GameActivity.CAMERA_HEIGHT - ballSprite
