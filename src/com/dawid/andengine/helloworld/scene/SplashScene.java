@@ -5,6 +5,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
 
 import com.dawid.andengine.helloworld.game.GameActivity;
+import com.dawid.andengine.helloworld.game.ResourceManager;
 import com.dawid.andengine.helloworld.game.SceneManager.SceneType;
 
 public class SplashScene extends BaseScene
@@ -14,7 +15,7 @@ public class SplashScene extends BaseScene
 	@Override
 	public void createScene()
 	{
-		splash = new Sprite(0, 0, resourceManager.splashRegion, vbom)
+		splash = new Sprite(0, 0, ResourceManager.getInstance().splashRegion, vbom)
 		{
 			@Override
 			protected void preDraw(GLState pGLState, Camera pCamera)
@@ -38,7 +39,7 @@ public class SplashScene extends BaseScene
 	@Override
 	public SceneType getSceneType()
 	{
-		return SceneType.SCENE_SPLASH;
+		return SceneType.SPLASH;
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class LoadingScene extends BaseScene
 	@Override
 	public SceneType getSceneType()
 	{
-		return SceneType.SCENE_LOADING;
+		return SceneType.LOADING;
 	}
 
 	@Override

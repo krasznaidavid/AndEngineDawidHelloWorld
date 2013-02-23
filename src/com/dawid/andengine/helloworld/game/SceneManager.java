@@ -1,8 +1,6 @@
 package com.dawid.andengine.helloworld.game;
 
 import org.andengine.engine.Engine;
-import org.andengine.engine.handler.timer.ITimerCallback;
-import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.ui.IGameInterface.OnCreateSceneCallback;
 
 import com.dawid.andengine.helloworld.scene.BaseScene;
@@ -20,18 +18,18 @@ public class SceneManager
 	
 	private static final SceneManager INSTANCE = new SceneManager();
 	
-	private SceneType currentSceneType = SceneType.SCENE_SPLASH;
+	private SceneType currentSceneType = SceneType.SPLASH;
 	
 	private BaseScene currentScene;
 	
-	private Engine engine = ResourceManager.getInstance().engine;
+	private Engine engine = ResourceManager.getInstance().getEngine();
 	
 	public enum SceneType
 	{
-		SCENE_SPLASH,
-		SCENE_MENU,
-		SCENE_GAME,
-		SCENE_LOADING
+		SPLASH,
+		MENU,
+		GAME,
+		LOADING
 	}
 	
 	public void setScene(BaseScene scene)
@@ -45,16 +43,16 @@ public class SceneManager
 	{
 		switch (sceneType)
 		{
-			case SCENE_MENU:
+			case MENU:
 				setScene(menuScene);
 				break;
-			case SCENE_GAME:
+			case GAME:
 				setScene(gameScene);
 				break;
-			case SCENE_LOADING:
+			case LOADING:
 				setScene(loadingScene);
 				break;
-			case SCENE_SPLASH:
+			case SPLASH:
 				setScene(splashScene);
 				break;
 		}
@@ -88,16 +86,9 @@ public class SceneManager
 	{
 	    setScene(loadingScene);
 	    ResourceManager.getInstance().unloadMenuTextures();
-	    mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() 
-	    {
-	        public void onTimePassed(final TimerHandler pTimerHandler) 
-	        {
-	            mEngine.unregisterUpdateHandler(pTimerHandler);
-	            ResourceManager.getInstance().loadGameResources();
-	            gameScene = new GameScene();
-	            setScene(gameScene);
-	        }
-	    }));
+	    ResourceManager.getInstance().loadGameResources();
+        gameScene = new GameScene();
+        setScene(gameScene);
 	}
 	
 	public void loadMenuScene(final Engine mEngine)
@@ -105,17 +96,9 @@ public class SceneManager
 	    setScene(loadingScene);
 	    gameScene.disposeScene();
 	    ResourceManager.getInstance().unloadGameTextures();
-	    mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() 
-	    {
-	        public void onTimePassed(final TimerHandler pTimerHandler) 
-	        {
-	            mEngine.unregisterUpdateHandler(pTimerHandler);
-	            ResourceManager.getInstance().loadMenuTextures();
-	            setScene(menuScene);
-	        }
-	    }));
+	    ResourceManager.getInstance().loadMenuTextures();
+        setScene(menuScene);
 	}
-
 	
 	public static SceneManager getInstance()
 	{

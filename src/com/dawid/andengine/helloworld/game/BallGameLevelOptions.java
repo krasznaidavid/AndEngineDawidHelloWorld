@@ -100,7 +100,7 @@ public class BallGameLevelOptions
 		scaleX = pScaleX;
 		fixedRotation = pIsFixedRotation;
 		canBeNegative = pCanBeNegative;
-		isOrdered = Math.random() > 0.5 ? true : false;
+		isOrdered = true;
 		gameSeconds = pGameSeconds;
 		init();
 	}

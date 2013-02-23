@@ -67,13 +67,6 @@ public class GameActivity extends BaseGameActivity
 	}
 	
 	@Override
-	protected void onDestroy()
-	{
-	    super.onDestroy();
-	    System.exit(0);
-	}
-	
-	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) 
 	{  
 	    if (keyCode == KeyEvent.KEYCODE_BACK)
@@ -83,4 +76,24 @@ public class GameActivity extends BaseGameActivity
 	    return false; 
 	}
 
+	@Override
+	protected void onPause() 
+	{
+		super.onPause();
+	}
+		
+	@Override
+	protected synchronized void onResume() 
+	{
+		super.onResume();
+		System.gc();
+	}
+		
+	@Override
+	protected void onDestroy() 
+	{
+		super.onDestroy();
+		System.exit(0);
+	}
+	
 }

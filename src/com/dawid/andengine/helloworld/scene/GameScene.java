@@ -118,7 +118,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener,
 		final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(1,
 				1f, 0.1f);
 		final BallSprite ballSprite = new BallSprite(0, 0,
-				resourceManager.ball_region, vbom, ballNumber, scale, this);
+				ResourceManager.getInstance().ball_region, vbom, ballNumber, scale, this);
 		final float ballX = (float) ((GameActivity.CAMERA_WIDTH - ballSprite
 				.getWidth()) * Math.random());
 		final float ballY = (float) ((GameActivity.CAMERA_HEIGHT - ballSprite
@@ -143,7 +143,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener,
 		final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(1,
 				1f, 0.1f);
 		final BallSprite ballSprite = new BallSprite(0, 0,
-				resourceManager.ball_region, vbom, nevezo, szamlalo, scale, this);
+				ResourceManager.getInstance().ball_region, vbom, nevezo, szamlalo, scale, this);
 		final float ballX = (float) ((GameActivity.CAMERA_WIDTH - ballSprite
 				.getWidth()) * Math.random());
 		final float ballY = (float) ((GameActivity.CAMERA_HEIGHT - ballSprite
@@ -276,7 +276,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener,
 	@Override
 	public SceneType getSceneType()
 	{
-		return SceneType.SCENE_GAME;
+		return SceneType.GAME;
 	}
 
 	@Override

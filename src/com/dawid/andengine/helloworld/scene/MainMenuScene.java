@@ -9,6 +9,7 @@ import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasSource;
 
 import com.dawid.andengine.helloworld.game.GameActivity;
+import com.dawid.andengine.helloworld.game.ResourceManager;
 import com.dawid.andengine.helloworld.game.SceneManager;
 import com.dawid.andengine.helloworld.game.SceneManager.SceneType;
 
@@ -34,7 +35,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	@Override
 	public SceneType getSceneType()
 	{
-		return SceneType.SCENE_MENU;
+		return SceneType.MENU;
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	    menuChildScene = new MenuScene(camera);
 	    menuChildScene.setPosition(0, 0);
 	    
-	    final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourceManager.playRegion, vbom), 1.2f, 1);
+	    final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, ResourceManager.getInstance().playRegion, vbom), 1.2f, 1);
 	    //final IMenuItem optionsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_OPTIONS, resourceManager.optionsRegion, vbom), 1.2f, 1);
 	    
 	    menuChildScene.addMenuItem(playMenuItem);

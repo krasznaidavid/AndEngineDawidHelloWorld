@@ -21,13 +21,58 @@ import android.graphics.Color;
 
 public class ResourceManager
 {
-	private static final ResourceManager INSTANCE = new ResourceManager();
+	private static ResourceManager INSTANCE;
 	
-	public Engine engine;
-	public GameActivity activity;
-	public Camera camera;
-	public VertexBufferObjectManager vbom;
+	private Engine engine;
+	private GameActivity activity;
+	private Camera camera;
+	public void setEngine(Engine engine)
+	{
+		this.engine = engine;
+	}
+
+	public void setActivity(GameActivity activity)
+	{
+		this.activity = activity;
+	}
+
+	public void setCamera(Camera camera)
+	{
+		this.camera = camera;
+	}
+
+	public void setVbom(VertexBufferObjectManager vbom)
+	{
+		this.vbom = vbom;
+	}
+
+	private VertexBufferObjectManager vbom;
 	
+	public Engine getEngine()
+	{
+		return engine;
+	}
+
+	public GameActivity getActivity()
+	{
+		return activity;
+	}
+
+	public Camera getCamera()
+	{
+		return camera;
+	}
+
+	public VertexBufferObjectManager getVbom()
+	{
+		return vbom;
+	}
+
+	public void setMainFont(StrokeFont mainFont)
+	{
+		this.mainFont = mainFont;
+	}
+
 	private Font plainFont;
 	private StrokeFont mainFont;
 	
@@ -46,18 +91,14 @@ public class ResourceManager
 	public BuildableBitmapTextureAtlas gameTextureAtlas;
 	    
 	// Game Texture Regions
-	public ITextureRegion platform1_region;
-	public ITextureRegion platform2_region;
-	public ITextureRegion platform3_region;
-	public ITextureRegion coin_region;
 	public ITextureRegion ball_region;
 	
 	public static void prepareResourceManager(Engine engine, GameActivity activity, Camera camera, VertexBufferObjectManager vbom)
 	{
-		getInstance().engine = engine;
-		getInstance().activity = activity;
-		getInstance().camera = camera;
-		getInstance().vbom = vbom;
+		getInstance().setEngine(engine);
+		getInstance().setActivity(activity);
+		getInstance().setCamera(camera);
+		getInstance().setVbom(vbom);
 		getInstance().loadMainFont();
 	}
 	
@@ -113,13 +154,7 @@ public class ResourceManager
 	{
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
 	    gameTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
-	    
-//	    platform1_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "platform1.png");
-//	    platform2_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "platform2.png");
-//	    platform3_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "platform3.png");
-//	    coin_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "coin.png");
-	    ball_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "ball.png");
-	   
+	    ball_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "ball.png");   
 	    try 
 	    {
 	        this.gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -155,9 +190,8 @@ public class ResourceManager
 	{
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
 		menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
-		menuBackgroundRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "menu_background.png");
 		playRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "play.png");
-		optionsRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "options.png");
+//		optionsRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "options.png");
 		try 
 		{
 		    this.menuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -180,6 +214,8 @@ public class ResourceManager
 	
 	public static ResourceManager getInstance()
 	{
+		if (INSTANCE == null)
+			INSTANCE = new ResourceManager();
 		return INSTANCE;
 	}
 	
