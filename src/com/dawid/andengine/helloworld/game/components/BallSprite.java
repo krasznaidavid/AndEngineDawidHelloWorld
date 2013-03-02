@@ -11,7 +11,7 @@ import org.andengine.util.HorizontalAlign;
 import org.andengine.util.color.Color;
 
 import com.dawid.andengine.helloworld.game.ResourceManager;
-import com.dawid.andengine.helloworld.scene.GameScene;
+import com.dawid.andengine.helloworld.scene.BallGameScene;
 import com.dawid.andengine.helloworld.util.ColorHelper;
 
 public class BallSprite extends Sprite
@@ -19,7 +19,7 @@ public class BallSprite extends Sprite
 	private int mBallNumber1;
 	private int mBallNumber2;
 	private Color mBallColor;
-	private final GameScene mGameScene;
+	private final BallGameScene mGameScene;
 	private final BallType mBallType;
 
 	public enum BallType
@@ -29,7 +29,7 @@ public class BallSprite extends Sprite
 	}
 	
 	public BallSprite(float pX, float pY, ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, 
-			final int pBallNumber1, final float pScale, final GameScene pGameScene)
+			final int pBallNumber1, final float pScale, final BallGameScene pGameScene)
 	{
 		super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
 		mBallNumber1 = pBallNumber1;
@@ -40,7 +40,7 @@ public class BallSprite extends Sprite
 	}
 	
 	public BallSprite(float pX, float pY, ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, 
-			final int nevezo, final int szamlalo, final float pScale, final GameScene pGameScene)
+			final int nevezo, final int szamlalo, final float pScale, final BallGameScene pGameScene)
 	{
 		super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
 		mBallNumber1 = nevezo;
@@ -98,7 +98,8 @@ public class BallSprite extends Sprite
 
 	public void kill()
 	{
-		final PhysicsConnector physicsConnector = mGameScene.getPhysicsWorld().getPhysicsConnectorManager().findPhysicsConnectorByShape(this);
+		final PhysicsConnector physicsConnector = mGameScene.getPhysicsWorld()
+				.getPhysicsConnectorManager().findPhysicsConnectorByShape(this);
 		mGameScene.getPhysicsWorld().unregisterPhysicsConnector(physicsConnector);
 		mGameScene.getPhysicsWorld().destroyBody(physicsConnector.getBody());
 		mGameScene.unregisterTouchArea(this);
@@ -118,4 +119,18 @@ public class BallSprite extends Sprite
 	{
 		return mBallColor;
 	}
+		
+	/*@Override
+	protected void preDraw(GLState pGLState, Camera pCamera)
+	{
+		pGLState.enableDither();	
+		super.preDraw(pGLState, pCamera);
+	}
+	
+	@Override	
+	protected void postDraw(GLState pGLState, Camera pCamera)
+	{
+		pGLState.disableDither();				
+		super.preDraw(pGLState, pCamera);
+	}*/
 }

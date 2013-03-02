@@ -10,29 +10,6 @@ public class BallGameLevelOptions
 {
 	private float maxScale = 2.5f;
 	private float minScale = 1f;
-	
-	private boolean isOrdered;
-	
-	public float getMaxScale()
-	{
-		return maxScale;
-	}
-
-	public void setMaxScale(float maxScale)
-	{
-		this.maxScale = maxScale;
-	}
-
-	public float getMinScale()
-	{
-		return minScale;
-	}
-
-	public void setMinScale(float minScale)
-	{
-		this.minScale = minScale;
-	}
-
 	private BallGameType ballGameType;
 	private int ballCount;
 	private int bound;
@@ -40,67 +17,25 @@ public class BallGameLevelOptions
 	private ArrayList<TortSzam> numbersTort;
 	private float scaleX;
 	private boolean fixedRotation;
+	private boolean isOrdered;
 	private boolean canBeNegative;
 	private int gameSeconds;
-	
 	private float scaleUnit;
+	private Direction direction;
 	
-	public BallGameType getBallGameType()
-	{
-		return ballGameType;
-	}
 
-	public int getBallCount()
-	{
-		return ballCount;
-	}
-
-	public int getBound()
-	{
-		return bound;
-	}
-
-	public ArrayList<Integer> getNumbers()
-	{
-		return numbers;
-	}
-
-	public ArrayList<TortSzam> getNumbersTort()
-	{
-		return numbersTort;
-	}
-
-	public float getScaleX()
-	{
-		return scaleX;
-	}
-
-	public boolean isFixedRotation()
-	{
-		return fixedRotation;
-	}
-
-	public boolean canBeNegative()
-	{
-		return canBeNegative;
-	}
-
-	public int getGameSeconds()
-	{
-		return gameSeconds;
-	}
-
-	public BallGameLevelOptions(final BallGameType pBallGameType, final int pBallCount, final int pBound,
-								final float pScaleX, final boolean pIsFixedRotation, final boolean pCanBeNegative, 
-								final boolean pIsOrdered, final int pGameSeconds)
+	public BallGameLevelOptions(final BallGameType pBallGameType, final Direction pDirection, final int pBallCount,
+								final int pBound, final float pScaleX, final boolean pIsFixedRotation, 
+								final boolean pCanBeNegative, final boolean pIsOrdered, final int pGameSeconds)
 	{
 		ballGameType = pBallGameType;
+		direction = pDirection;
 		ballCount = pBallCount;
 		bound = pBound;
 		scaleX = pScaleX;
 		fixedRotation = pIsFixedRotation;
 		canBeNegative = pCanBeNegative;
-		isOrdered = true;
+		isOrdered = pIsOrdered;
 		gameSeconds = pGameSeconds;
 		init();
 	}
@@ -231,6 +166,71 @@ public class BallGameLevelOptions
 		return min;
 	}
 	
+	public BallGameType getBallGameType()
+	{
+		return ballGameType;
+	}
+
+	public int getBallCount()
+	{
+		return ballCount;
+	}
+
+	public int getBound()
+	{
+		return bound;
+	}
+
+	public ArrayList<Integer> getNumbers()
+	{
+		return numbers;
+	}
+
+	public ArrayList<TortSzam> getNumbersTort()
+	{
+		return numbersTort;
+	}
+
+	public float getScaleX()
+	{
+		return scaleX;
+	}
+
+	public boolean isFixedRotation()
+	{
+		return fixedRotation;
+	}
+
+	public boolean canBeNegative()
+	{
+		return canBeNegative;
+	}
+
+	public int getGameSeconds()
+	{
+		return gameSeconds;
+	}
+	
+	public float getMaxScale()
+	{
+		return maxScale;
+	}
+
+	public void setMaxScale(float maxScale)
+	{
+		this.maxScale = maxScale;
+	}
+
+	public float getMinScale()
+	{
+		return minScale;
+	}
+
+	public void setMinScale(float minScale)
+	{
+		this.minScale = minScale;
+	}
+	
 	public ArrayList<Integer> getmNumbers()
 	{
 		return numbers;
@@ -251,11 +251,26 @@ public class BallGameLevelOptions
 		this.scaleUnit = scaleUnit;
 	}
 
+	public Direction getDirection()
+	{
+		return direction;
+	}
+
+	public void setDirection(Direction direction)
+	{
+		this.direction = direction;
+	}
+	
+	public enum Direction
+	{
+		LowestToHighest,
+		HighestToLowest
+	}
+
 	public enum BallGameType
 	{
 		Egesz, 
 		Tort,
 		Vegyes
 	}
-	
 }

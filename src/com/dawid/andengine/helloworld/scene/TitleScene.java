@@ -13,7 +13,7 @@ import com.dawid.andengine.helloworld.game.ResourceManager;
 import com.dawid.andengine.helloworld.game.SceneManager;
 import com.dawid.andengine.helloworld.game.SceneManager.SceneType;
 
-public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
+public class TitleScene extends BaseScene implements IOnMenuItemClickListener
 {
 	private MenuScene menuChildScene;
 	private final int MENU_PLAY = 0;
@@ -35,7 +35,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	@Override
 	public SceneType getSceneType()
 	{
-		return SceneType.MENU;
+		return SceneType.TITLE;
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		switch(pMenuItem.getID())
         {
         	case MENU_PLAY: 
-        		SceneManager.getInstance().loadGameScene(engine);
+        		SceneManager.getInstance().loadGameSelectScene();
         		return true;
         	case MENU_OPTIONS: 
         		return true;

@@ -4,17 +4,19 @@ import org.andengine.engine.Engine;
 import org.andengine.ui.IGameInterface.OnCreateSceneCallback;
 
 import com.dawid.andengine.helloworld.scene.BaseScene;
-import com.dawid.andengine.helloworld.scene.GameScene;
+import com.dawid.andengine.helloworld.scene.BallGameScene;
+import com.dawid.andengine.helloworld.scene.GameSelectScene;
 import com.dawid.andengine.helloworld.scene.LoadingScene;
-import com.dawid.andengine.helloworld.scene.MainMenuScene;
+import com.dawid.andengine.helloworld.scene.TitleScene;
 import com.dawid.andengine.helloworld.scene.SplashScene;
 
 public class SceneManager
 {
 	private BaseScene splashScene;
-	private BaseScene menuScene;
+	private BaseScene titleScene;
 	private BaseScene gameScene;
 	private BaseScene loadingScene;
+	private BaseScene gameSelectScene;
 	
 	private static final SceneManager INSTANCE = new SceneManager();
 	
@@ -27,8 +29,9 @@ public class SceneManager
 	public enum SceneType
 	{
 		SPLASH,
-		MENU,
-		GAME,
+		TITLE,
+		BALL_GAME,
+		GAME_SELECT,
 		LOADING
 	}
 	
@@ -43,10 +46,13 @@ public class SceneManager
 	{
 		switch (sceneType)
 		{
-			case MENU:
-				setScene(menuScene);
+			case TITLE:
+				setScene(titleScene);
 				break;
-			case GAME:
+			case GAME_SELECT:
+				setScene(gameSelectScene);
+				break;
+			case BALL_GAME:
 				setScene(gameScene);
 				break;
 			case LOADING:
@@ -73,31 +79,40 @@ public class SceneManager
 		splashScene = null;
 	}
 	
-	public void createMenuScene()
+	public void createTitleScene()
 	{
 	    ResourceManager.getInstance().loadMenuResources();
-	    menuScene = new MainMenuScene();
+	    titleScene = new TitleScene();
 	    loadingScene = new LoadingScene();
-	    setScene(menuScene);
+	    setScene(titleScene);
 	    disposeSplashScene();
 	}
 	
-	public void loadGameScene(final Engine mEngine)
+	public void loadGameSelectScene()
+	{
+		setScene(loadingScene);
+	    //ResourceManager.getInstance().unloadMenuTextures();
+		gameSelectScene = new GameSelectScene();
+		setScene(gameSelectScene);
+	}
+	
+	public void loadBallGameScene()
 	{
 	    setScene(loadingScene);
-	    ResourceManager.getInstance().unloadMenuTextures();
+	    if (gameSelectScene != null)
+	    	gameSelectScene.disposeScene();
 	    ResourceManager.getInstance().loadGameResources();
-        gameScene = new GameScene();
+        gameScene = new BallGameScene();
         setScene(gameScene);
 	}
 	
-	public void loadMenuScene(final Engine mEngine)
+	public void loadTitleScene()
 	{
 	    setScene(loadingScene);
 	    gameScene.disposeScene();
 	    ResourceManager.getInstance().unloadGameTextures();
 	    ResourceManager.getInstance().loadMenuTextures();
-        setScene(menuScene);
+        setScene(titleScene);
 	}
 	
 	public static SceneManager getInstance()

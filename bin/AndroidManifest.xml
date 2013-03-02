@@ -20,9 +20,7 @@
         android:theme="@style/AppTheme" >
         <activity 
             android:name="com.dawid.andengine.helloworld.game.GameActivity"
-            android:configChanges="orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -30,3 +28,6 @@
         </activity>
     </application>
 </manifest>
+
+<!-- android:configChanges="orientation"
+            android:screenOrientation="landscape" -->

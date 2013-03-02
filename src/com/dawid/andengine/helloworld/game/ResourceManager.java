@@ -21,7 +21,7 @@ import android.graphics.Color;
 
 public class ResourceManager
 {
-	private static ResourceManager INSTANCE;
+	private static final ResourceManager INSTANCE = new ResourceManager();
 	
 	private Engine engine;
 	private GameActivity activity;
@@ -85,13 +85,18 @@ public class ResourceManager
 	public ITextureRegion playRegion;
 	public ITextureRegion optionsRegion;
 	private BuildableBitmapTextureAtlas menuTextureAtlas;
+	
+	//Game select scene
+	
 
 	
 	// Game Texture
 	public BuildableBitmapTextureAtlas gameTextureAtlas;
 	    
 	// Game Texture Regions
-	public ITextureRegion ball_region;
+	private ITextureRegion ballRegion;
+	private ITextureRegion directionArrowRegion;
+	private ITextureRegion directionArrowMinusRegion;
 	
 	public static void prepareResourceManager(Engine engine, GameActivity activity, Camera camera, VertexBufferObjectManager vbom)
 	{
@@ -154,7 +159,12 @@ public class ResourceManager
 	{
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
 	    gameTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
-	    ball_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "ball.png");   
+	    ballRegion = 
+	    		BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "ball.png");   
+	    directionArrowRegion = 
+	    		BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "direction_arrow.png");   
+	    directionArrowMinusRegion = 
+	    		BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "direction_arrow_minus.png");   
 	    try 
 	    {
 	        this.gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -214,13 +224,26 @@ public class ResourceManager
 	
 	public static ResourceManager getInstance()
 	{
-		if (INSTANCE == null)
-			INSTANCE = new ResourceManager();
 		return INSTANCE;
 	}
 	
 	public StrokeFont getMainFont()
 	{
 		return mainFont;
+	}
+
+	public ITextureRegion getBallRegion()
+	{
+		return ballRegion;
+	}
+	
+	public ITextureRegion getDirectionArrowRegion()
+	{
+		return directionArrowRegion;
+	}
+	
+	public ITextureRegion getDirectionArrowMinusRegion()
+	{
+		return directionArrowMinusRegion;
 	}
 }

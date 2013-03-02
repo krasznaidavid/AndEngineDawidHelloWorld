@@ -20,8 +20,8 @@ public class SplashScene extends BaseScene
 			@Override
 			protected void preDraw(GLState pGLState, Camera pCamera)
 			{
+				pGLState.enableDither();				
 				super.preDraw(pGLState, pCamera);
-				pGLState.enableDither();
 			}
 		};
 		

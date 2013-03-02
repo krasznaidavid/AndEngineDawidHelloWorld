@@ -16,24 +16,26 @@ import android.view.KeyEvent;
 
 public class GameActivity extends BaseGameActivity
 {
-	public static final int CAMERA_WIDTH = 800;
-	public static final int CAMERA_HEIGHT = 480;
+	private static final int FPS = 60;
+	
+	public static final int CAMERA_WIDTH = 480;
+	public static final int CAMERA_HEIGHT = 800;
 	
 	private Camera camera;
 	
 	@Override
 	public Engine onCreateEngine(EngineOptions pEngineOptions)
 	{
-		return new LimitedFPSEngine(pEngineOptions, 60);
+		return new LimitedFPSEngine(pEngineOptions, FPS);
 	}
 	
 	@Override
 	public EngineOptions onCreateEngineOptions()
 	{
 		camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-		EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR,
+		EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
 				new FillResolutionPolicy(), this.camera);
-		engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
+		//engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
 		engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
 		return engineOptions;
 	}
@@ -60,7 +62,7 @@ public class GameActivity extends BaseGameActivity
 			public void onTimePassed(TimerHandler pTimerHandler)
 			{
 				mEngine.unregisterUpdateHandler(pTimerHandler);
-				SceneManager.getInstance().createMenuScene();
+				SceneManager.getInstance().createTitleScene();
 			}
 		}));
 		pOnPopulateSceneCallback.onPopulateSceneFinished();

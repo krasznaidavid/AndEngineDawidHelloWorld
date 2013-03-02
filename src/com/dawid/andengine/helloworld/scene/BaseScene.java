@@ -22,7 +22,7 @@ public abstract class BaseScene extends Scene
 		this.activity = ResourceManager.getInstance().getActivity();
 		this.vbom = ResourceManager.getInstance().getVbom();
 		this.camera = ResourceManager.getInstance().getCamera();
-		createScene();
+		this.createScene();
 	}
 
 	public abstract void createScene();
